@@ -2,6 +2,7 @@
 <html lang="{{ .Site.LanguageCode }}">
 {{ partial "head.html" . }}
 <body>
+
   <a href="#main" class="skip-link p-screen-reader-text">Skip to content</a>
   {{ partial "svgpack-sprite.html" . }}
   <header class="l-header">
@@ -15,5 +16,8 @@
       {{ . }}
     </p>
     {{ end }}
+      {{ partial "menu.html" . }}
+
   </header>
   <main id="main" class="l-main">
+
