@@ -13,7 +13,12 @@
       </div>
       {{ end }}
       {{ range .Params.tags }}
-      <a href="{{ $baseurl }}/tags/{{ . | urlize }}" class="c-tag">{{ . }}</a>
+      <a href="{{ $baseurl }}/tags/{{ . | urlize }}/" class="d-tag">{{ . }}</a>
+      {{ end }}
+      {{ if not .Params.notoc }}
+        <div id="toc" class="well col-md-4 col-sm-6">
+        {{ .TableOfContents }}
+        </div>
       {{ end }}
     </div>
   </header>
@@ -21,7 +26,7 @@
     <img src="{{ . }}" alt="thumbnail" class="p-article__thumbnail">
   {{ end }}
   <section id="js-article" class="p-article__body">
-    {{ .Content }}
+    {{ .Content | replaceRE "(<h[1-3] id=\"([^\"]+)\".+)(</h[1-3]+>)" "<a class=\"headline-hash\" href=\"#${2}\">${1}&nbsp;</a> ${3}" | safeHTML }}
   </section>
     {{ partial "menu.html" . }}
     {{ partial "siteinfo.html" . }}
