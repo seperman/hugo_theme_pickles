@@ -32,5 +32,8 @@
     "webpack": "^4.41.2",
     "webpack-stream": "^5.2.1",
     "zooming": "^2.1.1"
+  },
+  "resolutions": {
+    "graceful-fs": "4.2.3"
   }
 }

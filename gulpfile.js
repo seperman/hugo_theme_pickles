@@ -12,7 +12,8 @@ const webpackConfig = require('./webpack.config')
 
 // SCSS
 // =====================================================
-const compileSass = () => {
+const compileSass = (done) => {
+  done();
   return src(config.tasks.scss.src)
     .pipe(
       sass({
@@ -24,13 +25,15 @@ const compileSass = () => {
 
 // Images
 // =====================================================
-const minifyImages = () => {
+const minifyImages = (done) => {
+  done();
   return src(config.tasks.images.src).pipe(dest(config.tasks.images.dest))
 }
 
 // webpack
 // =====================================================
-const compileJavascript = () => {
+const compileJavascript = (done) => {
+  done();
   return src(config.tasks.webpack.src)
     .pipe(plumber())
     .pipe(webpackStream(webpackConfig, webpack))
@@ -39,7 +42,8 @@ const compileJavascript = () => {
 
 // Font
 // =====================================================
-const font = () => {
+const font = (done) => {
+  done();
   return src(config.tasks.fonts.src).pipe(dest(config.tasks.fonts.dest))
 }
 
@@ -68,11 +72,19 @@ const clean = cb => {
 // Watch
 // =====================================================
 const watchFiles = () => {
-  watch(config.tasks.scss.src, compileSass)
+  watch('./src/scss/**/*.scss', compileSass)
   watch(config.tasks.webpack.src, compileJavascript)
   watch(config.tasks.images.src, minifyImages)
   watch(config.tasks.fonts.src, font)
 }
+
+// const morestuff = () => {
+//   watch('./src/scss/**/*.scss', function(done) {
+//    console.log('changed!!');
+//    done();
+//   });
+// }
+
 
 // Default
 // =====================================================

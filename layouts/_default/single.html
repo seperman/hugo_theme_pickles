@@ -4,11 +4,18 @@
   <header>
     <h1>{{ .Title }}</h1>
     <div>
+      {{ if not .Params.disabledate }}
       <div class="c-time">
         {{ partial "timestamp.html" . }}
       </div>
+      {{ end }}
       {{ range .Params.tags }}
-      <a href="{{ $baseurl }}/tags/{{ . | urlize }}" class="c-tag">{{ . }}</a>
+      <a href="{{ $baseurl }}/tags/{{ . | urlize }}/" class="d-tag">{{ . }}</a>
+      {{ end }}
+      {{ if not .Params.notoc }}
+        <div id="toc" class="well col-md-4 col-sm-6">
+        {{ .TableOfContents }}
+        </div>
       {{ end }}
     </div>
   </header>
@@ -16,9 +23,12 @@
     <img src="{{ . }}" alt="thumbnail" class="p-article__thumbnail">
   {{ end }}
   <section id="js-article" class="p-article__body">
-    {{ .Content }}
+    {{ .Content | replaceRE "(<h[1-3] id=\"([^\"]+)\".+)(</h[1-3]+>)" "<a class=\"headline-hash\" href=\"#${2}\">${1}&nbsp;</a> ${3}" | safeHTML }}
   </section>
+    {{ partial "menu.html" . }}
+    {{ partial "siteinfo.html" . }}
   <footer>
+    {{ if not .Params.disabledisqus }}
     {{ with ($.Param "disqus") }}
     <div id="disqus_thread"></div>
     <script>
@@ -32,6 +42,8 @@
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     {{ end }}
+    {{ end }}
+    {{ if not .Params.disable_old_new }}
     <nav class="p-pagination c-pagination">
       <div class="c-pagination__ctrl">
         <div class="c-pagination__newer">
@@ -48,8 +60,7 @@
         </div>
       </div>
     </nav>
-    {{ partial "related.html" . }}
-    {{ partial "siteinfo.html" . }}
+    {{ end }}
   </footer>
 </article>
 {{ partial "footer.html" . }}

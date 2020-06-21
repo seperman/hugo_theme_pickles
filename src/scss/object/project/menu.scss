@@ -7,14 +7,13 @@
     padding: 0;
     @include mq-up(sm) {
       display: flex;
+      justify-content: center;
     }
   }
   &__listitem {
-    margin: 12px 0 0 0;
+    margin: 0 12px;
     list-style: none;
-    @include mq-up(sm) {
-      margin: 24px 24px 0 0;
-    }
+
     a {
       padding-bottom: 4px;
       &:hover {
@@ -37,4 +36,20 @@
       color: $link-color;
     }
   }
+}
+.d-tag {
+  display: inline-block;
+  margin: 0;
+  padding: 0px 10px 0px 0px;
+  font-size: 1.3rem;
+  color: #436888
+}
+.d-tag::before {
+  content: "#";
+  display: inline-block;
+  margin-right: 2px;
+  color: currentColor;
+}
+.d-tag:hover {
+  background: #fafafa;
 }
